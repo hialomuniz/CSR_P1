@@ -15,17 +15,10 @@ char caesarCipher (char c, int key)
     return c;
 }
 
-/***************************************/
 
-int main (int argc, char *argv []){
+void encryptingFileUsingCaesar(int key, char* filepath){
 
-	if (argc < 3){
-		cout << "./name_of_the_program key filename\n\n"; 
-	}
-
-	ifstream myfile(argv[2]);
-
-	int key = atoi (argv[1]);
+	ifstream myfile(filepath);
 
 	string input, output;
 
@@ -33,7 +26,7 @@ int main (int argc, char *argv []){
 		while (getline (myfile, input)){
 			output = "";
 
-			for(int x = 0; x < input.length(); x++) {
+			for(unsigned int x = 0; x < input.length(); x++) {
 	            output += caesarCipher(input[x], key);
 	        }
 
@@ -43,8 +36,22 @@ int main (int argc, char *argv []){
 	}
 
 	else
-
 		cout << "Unable to open file." << endl;
+
+}
+/***************************************/
+
+int main (int argc, char *argv []){
+
+	if (argc != 3){
+		//cout << "./name_of_the_program key filename\n"; 
+		fprintf(stderr, "./<name_of_the_program> <key> <filename>\n");
+		exit (0);
+	}
+
+	int key = atoi (argv[1]);
+
+	encryptingFileUsingCaesar(key, argv[2]);
 
 	return 0;
 }
