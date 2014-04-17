@@ -7,18 +7,25 @@ using namespace std;
 
 char caesarCipher (char c, int key)
 {
-    if(isalpha(c)) {
-        c = toupper(c); 
-        c = (((c-65)+key) % 26) + 65;
-    }
-
-    return c;
+	if(isalpha(c)){
+		c = (((c-65)-key) % 26);
+		if (c < 0){
+			c = 91 + c;
+		}
+		else {
+			c = c + 65;
+		}
+	}
+	return c;
 }
 
 
-void encryptingFileUsingCaesar(int key, char* filepath){
+void decryptingFileUsingCaesar(int key, char* filepath){
 
 	ifstream myfile(filepath);
+
+	ofstream file_output;
+	file_output.open ("output_decrypt");
 
 	string input, output;
 
@@ -26,12 +33,13 @@ void encryptingFileUsingCaesar(int key, char* filepath){
 		while (getline (myfile, input)){
 			output = "";
 
-			for(unsigned int x = 0; x < input.length(); x++) {
+		for(unsigned int x = 0; x < input.length(); x++) {
 	            output += caesarCipher(input[x], key);
 	        }
-
-	        cout << output << endl;
+		
+		file_output << output << "\n";
 		}
+		file_output.close();
 		myfile.close();
 	}
 
@@ -39,6 +47,7 @@ void encryptingFileUsingCaesar(int key, char* filepath){
 		cout << "Unable to open file." << endl;
 
 }
+
 /***************************************/
 
 int main (int argc, char *argv []){
@@ -51,7 +60,7 @@ int main (int argc, char *argv []){
 
 	int key = atoi (argv[1]);
 
-	encryptingFileUsingCaesar(key, argv[2]);
+	decryptingFileUsingCaesar(key, argv[2]);
 
 	return 0;
 }
