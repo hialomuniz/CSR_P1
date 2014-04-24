@@ -12,14 +12,8 @@ using namespace std;
 #define KEY_SIZE 4
 
 /***************************************************************
-* TODO: Função para recalcular uma chave de tamanho variável,
-* transformando-a para tamanho 4.
-* Função que realize a transposição usando uma matriz 8x8.
-***************************************************************/
-
-/***************************************************************
 * Função que realiza a encriptação por transposição. Trabalha com
-* uma chave de tamanho 4, em blocos de 8 caracteres cada. Os blocos são
+* uma chave de tamanho 4, em blocos de 8 bytes cada. Os blocos são
 * divididos em 4 substrings de 2 caracteres cada e então transpostas
 * em uma nova string.
 ***************************************************************/
@@ -70,13 +64,7 @@ int *convertingStringKeytoInt(string key){
 	return intKey;
 }
 
-/***************************************************************
-* Função que realiza a encriptação do texto. Recebe o texto inteiro
-* em formato string, e divide a mesma em blocos de 8 caracteres, que
-* são encriptados pela função encryptingDataBlock(). Retorna uma str
-* com o texto completo encriptado.
-***************************************************************/
-
+/***************************************************************/
 string encryptingUsingTransposition(string plaintext, string key){
 	string ciphertext = "", temp;
 
@@ -96,69 +84,20 @@ string encryptingUsingTransposition(string plaintext, string key){
 		index++;
 	}
 
+	cout << "Ciphertext: " << ciphertext << endl;
+
 	return ciphertext;
 }
 
-/**************************************************************
-* Função de leitura do arquivo, contendo o texto em claro.
-***************************************************************/
-
-string readingFile(char* filepath){
-	string text = "";
-	string temp;
-
-	ifstream file(filepath);
-
-	if (file.is_open()){
-		
-		while (getline (file, temp)){
-			text += temp;
-			text += "\n";
-		}
-
-		file.close();
-	}
-
-	else
-		cout << "Unable to open file." << endl;
-
-
-	return text;
-}
-
-/**************************************************************
-* Função de escrita do texto cifrado em arquivo.
-***************************************************************/
-
-void writingFile (string text){
-	ofstream output;
-
-	output.open ("encrypted_file2.txt");
-
-	output << text;
-
-	output.close();
-
-}
-
-
 /***************************************************************/
 
-int main (int argc, char *argv []){
-	string plaintext, key, cip, cip2;
+int main (){
+	string plaintext, key, cip;
 
-	if (argc != 3){
-		fprintf(stderr, "./<name_of_the_program> <key> <filename>\n");
-		exit (0);
-	}
-
-	key = argv[1];
-
-	plaintext = readingFile(argv[2]);
+	cin >> plaintext >> key;
 
 	cip = encryptingUsingTransposition(plaintext, key);
-
-	writingFile(cip);
+	//encryptingUsingTransposition(cip, key);
 
 	return 0;
 }
