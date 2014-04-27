@@ -2,6 +2,17 @@ Repositório para o Projeto 1 da disciplina Criptografia e Segurança de Redes
 
 /************************************************************************/
 
+Transposition Cipher:
+
+- Usage: ./<name_of_the_program> <key> <filename> <mode>
+
+Where: name_of_the_program is the executable, key is the key used to encrypt/decrypt (8-128 characters long), filename is the path of the file which contains the text to be encrypted/
+decrypted, and mode is the type of operation (encrypt/decrypt). 
+
+
+/************************************************************************/
+
+
 Neste exercício você irá fazer um programa de criptografia simples na linguagem de
 programação de sua escolha. Em seguida irá gerar alguns textos cifrados. Finalmente você vai
 tentar criptoanalizar os textos cifrados de um outro grupo.
