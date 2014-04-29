@@ -1,4 +1,5 @@
 #include "transpos.h"
+#include "functions.h"
 
 using namespace std;
 

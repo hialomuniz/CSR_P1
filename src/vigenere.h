@@ -6,12 +6,17 @@
 #include <cstring>	
 #include <string>
 #include <fstream>
+#include <map>
 
 using namespace std;
+
+#define MAX_ROTATIONS 36
 
 class Vigenere{
 public:
 	string key;
+	map<char, int> map_of_characters;
+	map<int, char> key_map;
 
 	Vigenere (string key){
 		for (unsigned int i = 0; i < key.size(); i++){
@@ -20,13 +25,13 @@ public:
 			else if (key[i] >= 'a' && key[i] <= 'z')
 				this->key += key[i] + 'A' - 'a';
 		}
+
+		fillingMap (map_of_characters, key_map);
 	}
 
 	string encryptingUsingVigenere(string);
 	string decryptingUsingVigenere(string);
-	string readingFile(const char*);
-	void writingFile (const string, string);
-
+	void fillingMap (map<char, int>&, map<int, char>&);
 
 };
 

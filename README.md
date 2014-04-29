@@ -2,12 +2,10 @@ Repositório para o Projeto 1 da disciplina Criptografia e Segurança de Redes
 
 /************************************************************************/
 
-Transposition Cipher:
-
-- Usage: ./<name_of_the_program> <key> <filename> <mode>
+- Usage: ./<name_of_the_program> <key> <filename> <mode> <cipher>
 
 Where: name_of_the_program is the executable, key is the key used to encrypt/decrypt (8-128 characters long), filename is the path of the file which contains the text to be encrypted/
-decrypted, and mode is the type of operation (encrypt/decrypt). 
+decrypted, mode is the type of operation (encrypt/decrypt) and cipher, the cipher used to encrypt/decrypt the file (-sub or -transp). 
 
 
 /************************************************************************/

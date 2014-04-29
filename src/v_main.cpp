@@ -2,6 +2,7 @@
 #include <string>
 
 #include "vigenere.h"
+#include "functions.h"
 
 using namespace std;
 
@@ -22,13 +23,16 @@ int main (int argc, char *argv []){
 	}
 
 	Vigenere cipher (key);
-	text = cipher.readingFile(argv[2]);
+	text = readingFile(argv[2]);
 
-	if (type == "encrypt")
+	if (type == "encrypt"){
 		cip = cipher.encryptingUsingVigenere(text);
-	else if(type == "decrypt")
+	}
+	
+	else if(type == "decrypt"){
 		cip = cipher.decryptingUsingVigenere(text);
+	}
 
-	cipher.writingFile(cip, type);
+	writingFile(cip, type);
 	return 0;
 }
