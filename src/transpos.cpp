@@ -70,8 +70,10 @@ string Transposition::encryptingUsingTransposition(string plaintext, const strin
 	int *intKey = new int [KEY_SIZE];
 	unsigned int index = 0;
 
-	while (plaintext.size()%KEY_SIZE != 0)
+	while (plaintext.size()%DATA_BLOCK != 0)
 		plaintext += " "; 
+
+	//cout << plaintext.size() << endl;
 
 	cout << "Working..." << endl;
 

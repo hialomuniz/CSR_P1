@@ -11,9 +11,11 @@ string readingFile(const char* filepath){
 		
 		while (getline (file, temp)){
 			text += temp;
-			text += "\n";
+			//text.push_back('\n');
+			//text += "\n";
 		}
 
+		//text.pop_back();
 		file.close();
 	}
 
