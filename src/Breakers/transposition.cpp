@@ -1,19 +1,12 @@
-#include <algorithm>   
-#include <vector>
-#include <ctime>
-
 #include "functions.h"
+#include "transposition.h"
 
-#define DICTIONARY_SIZE 3
-
-using namespace std;
+/******************************************************************/
 
 int K_SIZE = 1;
 int D_BLOCK = 1;
 
-/******************************************************************/
-
-void fillingDictionary(vector<string> &dictionary, string filepath){
+void TranspositionBreaker::fillingDictionary(vector<string> &dictionary, string filepath){
     string text;
 
     ifstream file(filepath.c_str());
@@ -34,16 +27,13 @@ void fillingDictionary(vector<string> &dictionary, string filepath){
 
 /******************************************************************/
 
-int findingPatterns (string text){
+int TranspositionBreaker::findingPatterns (string text){
     int count = 0;
 
     vector<string> dictionary;
 
     if (dictionary.empty())
         fillingDictionary(dictionary, "dictionary_file");
-
-    //const char* args[] = {"cryptography", "security", "data"};
-    //vector<string> dictionary (args, args + DICTIONARY_SIZE);
 
     size_t found;
 
@@ -59,7 +49,7 @@ int findingPatterns (string text){
 
 /******************************************************************/
 
-string decryptingDataBlock(const string ciphertext, const int *key){
+string TranspositionBreaker::decryptingDataBlock(const string ciphertext, const int *key){
     string plaintext = "", temp;
 
     int size = ciphertext.size()/K_SIZE;
@@ -79,7 +69,7 @@ string decryptingDataBlock(const string ciphertext, const int *key){
 
 /******************************************************************/
 
-string encryptingUsingTransposition(string plaintext, const int *key){
+string TranspositionBreaker::encryptingUsingTransposition(string plaintext, const int *key){
     string ciphertext = "", temp;
     
     unsigned int index = 0;
@@ -104,14 +94,14 @@ string encryptingUsingTransposition(string plaintext, const int *key){
 
 /******************************************************************/
 
-bool verifyingNewKey(string text, int* key){
+bool TranspositionBreaker::verifyingNewKey(string text, int* key){
     string ciphertext; 
     int count = 0;
 
     ciphertext = encryptingUsingTransposition(text, key);
     count = findingPatterns (ciphertext);
 
-    if (count >= 2){
+    if (count == DICTIONARY_SIZE){
         cout << "Key found: ";
 
         for (int i = 0; i < K_SIZE; i++){
@@ -120,7 +110,7 @@ bool verifyingNewKey(string text, int* key){
 
         cout << endl;
 
-        writingFile(ciphertext, "breaked");
+        writingFile(ciphertext, "breaked_t");
 
         return true;  
     }
@@ -130,8 +120,11 @@ bool verifyingNewKey(string text, int* key){
 
 /******************************************************************/
 
-bool calculatingPermutations(int N, string text){
+bool TranspositionBreaker::calculatingPermutations(int N, string text){
     int numbers[N];
+
+    K_SIZE = N;
+    D_BLOCK = N*N;
 
     for (int i = 1; i <= N; i++){
         numbers[i - 1] = i;
@@ -149,27 +142,4 @@ bool calculatingPermutations(int N, string text){
 
 /***************************************************************/
 
-int main (int argc, char* argv[]) {
-    string text = "", temp;
 
-    if (argc != 2){
-        fprintf(stderr, "./<name_of_the_program> <encrypted_file>\n");
-        exit (0);
-    }
-
-    text = readingFile(argv[1]);
-
-    //int start_s = clock();
-
-    for (int i = 1; i <= 8; i++){
-        K_SIZE = i;
-        D_BLOCK = i*i;
-
-        calculatingPermutations(K_SIZE, text);
-    }    
-
-    //int stop_s = clock();
-    //cout << endl << "time: " << (stop_s - start_s) / double(CLOCKS_PER_SEC) * 1000 << endl;
-
-  return 0;
-}

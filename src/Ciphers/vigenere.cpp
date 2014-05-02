@@ -8,15 +8,6 @@ void Vigenere::fillingMap(map<char, int> &map_of_characters, map<int, char> &key
 		key_map.insert(std::pair<int, char> (index, ('A' + i)));
 	}
 
-	for (int i = 0; i < 10; i++, index++){
-		map_of_characters.insert(std::pair<char, int> (('0' + i), index));
-		key_map.insert(std::pair<int, char> (index, ('0' + i)));
-
-	}
-
-	map_of_characters.insert(std::pair<char, int> (' ', index));
-	key_map.insert(std::pair<int, char> (index, ' '));
-
 }
 
 /************************************************************************
@@ -38,20 +29,19 @@ string Vigenere::encryptingUsingVigenere(string plaintext){
 		temp = toupper(plaintext[i]);
 		rt = key[index];
 
-		if (isalpha(temp) || isdigit(temp) || temp == ' '){
+		if (isalpha(temp)){
 			t1 = map_of_characters.find(temp)->second;
 			t2 = map_of_characters.find(rt)->second;
 
 			if ((t1+t2) > MAX_ROTATIONS)
 				ciphertext += key_map.find((t1 + t2) - (MAX_ROTATIONS + 1))->second;
 			else
-				ciphertext += key_map.find(t1 + t2)->second;				 			
+				ciphertext += key_map.find(t1 + t2)->second;	
+
+			index = (index + 1) % key.length();			 			
 		}
 
-		else
-			ciphertext += temp;
-
-		index = (index + 1) % key.length();
+		
 	}
 
 	cout << "Done." << endl;
@@ -74,20 +64,17 @@ string Vigenere::decryptingUsingVigenere(string ciphertext){
 		temp = ciphertext[i];
 		rt = key[index];
 
-		if (isalpha(temp) || isdigit(temp) || temp == ' '){
+		if (isalpha(temp)){
 			d1 = map_of_characters.find(temp)->second;
 			d2 = map_of_characters.find(rt)->second;
 
 			if (d1 < d2)
-				plaintext += key_map.find(d1 + (MAX_ROTATIONS+1 - d2))->second;
+				plaintext += key_map.find(d1 + (MAX_ROTATIONS + 1 - d2))->second;
 			else 
-				plaintext += key_map.find(d1 - d2)->second;		 			
+				plaintext += key_map.find(d1 - d2)->second;		
+
+			index = (index + 1) % key.length(); 			
 		}
-
-		else
-			plaintext += temp;
-
-		index = (index + 1) % key.length();
 	}
 
 	cout << "Done." << endl;

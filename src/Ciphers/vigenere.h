@@ -10,7 +10,7 @@
 
 using namespace std;
 
-#define MAX_ROTATIONS 36
+#define MAX_ROTATIONS 25
 
 class Vigenere{
 public:
