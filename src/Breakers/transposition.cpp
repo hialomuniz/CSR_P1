@@ -101,7 +101,7 @@ bool TranspositionBreaker::verifyingNewKey(string text, int* key){
     ciphertext = encryptingUsingTransposition(text, key);
     count = findingPatterns (ciphertext);
 
-    if (count == DICTIONARY_SIZE){
+    if (count >= DICTIONARY_SIZE){
         cout << "Key found: ";
 
         for (int i = 0; i < K_SIZE; i++){
@@ -121,7 +121,7 @@ bool TranspositionBreaker::verifyingNewKey(string text, int* key){
 /******************************************************************/
 
 bool TranspositionBreaker::calculatingPermutations(int N, string text){
-    int numbers[N];
+    int *numbers = new int [N];
 
     K_SIZE = N;
     D_BLOCK = N*N;
@@ -136,6 +136,8 @@ bool TranspositionBreaker::calculatingPermutations(int N, string text){
         if (verifyingNewKey(text, numbers))
             return true;
     } while (next_permutation(numbers, numbers + N));
+
+    delete[] numbers;
 
     return false;
 }

@@ -40,8 +40,6 @@ string Vigenere::encryptingUsingVigenere(string plaintext){
 
 			index = (index + 1) % key.length();			 			
 		}
-
-		
 	}
 
 	cout << "Done." << endl;
